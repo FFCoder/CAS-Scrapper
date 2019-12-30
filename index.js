@@ -33,6 +33,7 @@ const getData = async () => {
     );
     const element = await page.$(FSA_Amt_ID);
     const text = await page.evaluate(element => element.textContent, element);
+    await browser.close();
 
     const finalAmt = accounting.unformat(text);
     return finalAmt
@@ -53,10 +54,12 @@ getData().then(amt => {
         }
         if (res.statusCode == 200) {
             console.log("Notified");
+            return;
         }
         else {
             console.log(`Status Code: ${res.statusCode}`);
             console.log(body);
+            return;
         }
     })
 })
